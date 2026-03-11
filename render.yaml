@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: cofre-arte-vivo
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: EMAIL_USER
+        value: lizste.hidalgo@hotmail.com
+      - key: EMAIL_PASS
+        sync: false
+      - key: NODE_ENV
+        value: production
