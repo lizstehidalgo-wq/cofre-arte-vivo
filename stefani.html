@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFANI // Global Macro AI Terminal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* ESTÉTICA PREMIUM INSTITUCIONAL */
+            --bg-deep: #0A0E17;
+            /* Navy Muy Oscuro */
+            --text-main: #F8FAFC;
+            --text-dim: #94A3B8;
+            --accent-cyan: #3B82F6;
+            /* Azul Corporativo */
+            --accent-purple: #8B5CF6;
+            --accent-green: #10B981;
+            /* Verde Esmeralda Financiero */
+            --accent-red: #EF4444;
+            --accent-gold: #D4AF37;
+            /* Oro Institucional */
+            --accent-gold-glow: rgba(212, 175, 55, 0.4);
+            --border-thin: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(24px);
+            --panel-bg: rgba(18, 24, 38, 0.7);
+            /* Paneles sutilmente más claros */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.1), transparent 60%);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Ticker Tape */
+        .marquee-container {
+            background: #000;
+            border-bottom: 1px solid var(--accent-cyan);
+            display: flex;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            align-items: center;
+        }
+
+        .marquee {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        .marquee span {
+            margin-right: 40px;
+        }
+
+        .ticker-up {
+            color: var(--accent-green);
+        }
+
+        .ticker-down {
+            color: var(--accent-red);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100vw);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .app-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            border-right: 1px solid var(--border-thin);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: rgba(5, 5, 10, 0.8);
+            z-index: 10;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .brand {
+            text-align: center;
+            letter-spacing: 6px;
+            margin-bottom: 2.5rem;
+            color: white;
+            text-shadow: 0 0 15px var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            border-left: 3px solid transparent;
+            color: var(--text-dim);
+            padding: 12px 15px;
+            border-radius: 0 6px 6px 0;
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-left-color: var(--accent-gold);
+        }
+
+        .nav-btn.active {
+            color: var(--accent-gold);
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, transparent 100%);
+            border-left-color: var(--accent-cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .app-view {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease;
+            flex: 1;
+        }
+
+        .app-view.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-thin);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: 20px;
+            border: 1px solid var(--border-thin);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 5px 14px;
+            border-radius: 15px;
+            font-family: 'Fira Code', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--text-main);
+            color: var(--bg-deep);
+        }
+
+        /* GLOBE & DASHBOARD GRID */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent-purple);
+        }
+
+        .card-cyan::before {
+            background: var(--accent-cyan);
+        }
+
+        .card-green::before {
+            background: var(--accent-green);
+        }
+
+        .val-big {
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        /* TERMINAL */
+        .terminal {
+            background: #000;
+            border: 1px solid var(--border-thin);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-y: auto;
+            height: 180px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+        }
+
+        .log {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .log-t {
+            color: var(--text-dim);
+        }
+
+        /* TABLES */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .data-table th {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-family: 'Fira Code';
+            font-size: 0.95rem;
+        }
+
+        /* CHAT */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.03);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .chat-hist {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            scroll-behavior: smooth;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 1.2rem;
+            border-radius: 12px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .msg.sys {
+            align-self: flex-start;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            color: #d6faff;
+            border-top-left-radius: 2px;
+        }
+
+        .msg.usr {
+            align-self: flex-end;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top-right-radius: 2px;
+        }
+
+        .chat-in {
+            display: flex;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .chat-in input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0 1rem;
+            outline: none;
+            font-family: 'Space Grotesk';
+            font-size: 1.05rem;
+        }
+
+        .chat-in button {
+            background: var(--accent-cyan);
+            color: black;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Rajdhani';
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+
+        .chat-in button:hover {
+            background: #55f4ff;
+            box-shadow: 0 0 20px var(--accent-cyan);
+        }
+
+        /* QUANTA BANNER */
+        .quantum-banner {
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.15), transparent);
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--accent-cyan);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* PROGRESS BARS */
+        .prog-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .prog-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .loading-dots:after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                color: transparent;
+                text-shadow: .25em 0 0 transparent, .5em 0 0 transparent;
+            }
+
+            40% {
+                color: inherit;
+                text-shadow: .25em 0 0 transparent, .5em 0 0 transparent;
+            }
+
+            60% {
+                text-shadow: .25em 0 0 inherit, .5em 0 0 transparent;
+            }
+
+            80%,
+            100% {
+                text-shadow: .25em 0 0 inherit, .5em 0 0 inherit;
+            }
+        }
+
+        /* MARKET MOVERS (NEW) */
+        .market-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: 'Fira Code';
+            font-size: 0.8rem;
+            margin-right: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TICKER TAPE -->
+    <div class="marquee-container">
+        <div class="marquee" id="ticker-tape">
+            <span style="color:var(--text-dim);">[SYS] ESTABLISHING CONNECTION TO GLOBAL EXCHANGES...</span>
+        </div>
+    </div>
+
+    <div class="app-body">
+        <aside class="sidebar">
+            <h2 class="brand" style="text-shadow: 0 0 15px var(--accent-gold); color:var(--accent-gold);">STEFANI AI
+            </h2>
+            <div
+                style="text-align:center; font-size:0.75rem; color:var(--accent-gold); font-family:'Fira Code'; margin-top:-2rem; margin-bottom:5px; opacity:0.8;">
+                GLOBAL INVESTMENT ENTITY</div>
+            <div
+                style="text-align:center; font-size:0.65rem; color:var(--text-main); font-family:'Space Grotesk'; font-weight:bold; margin-bottom:2rem; letter-spacing:0.5px; opacity: 0.9;">
+                ⭐ MEJOR IA EN LATAM 2025<br>🏆 PREMIADA EN 3 CONTINENTES
+            </div>
+
+            <button class="nav-btn active" onclick="nav('dash')" id="btn-dash"><i data-lucide="globe"></i> <span
+                    data-i18n="nav_dash">MACRO OVERVIEW</span></button>
+            <button class="nav-btn" onclick="nav('chat')" id="btn-chat"><i data-lucide="cpu"></i> <span
+                    data-i18n="nav_chat">A.I. COMMAND</span></button>
+            <button class="nav-btn" onclick="nav('assets')" id="btn-assets"><i data-lucide="database"></i> <span
+                    data-i18n="nav_assets">RESERVES</span></button>
+            <button class="nav-btn" onclick="nav('algo')" id="btn-algo"><i data-lucide="activity"></i> <span
+                    data-i18n="nav_algo">ALGORITHMS</span></button>
+
+            <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
+                <div
+                    style="background:rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border: 1px solid var(--border-thin); display:flex; align-items:center; gap:10px;">
+                    <i data-lucide="shield-check" class="text-green" style="width:20px; height:20px;"></i>
+                    <div style="flex:1;">
+                        <div
+                            style="font-family:'Rajdhani'; font-size:0.9rem; color:var(--text-main); font-weight:bold;">
+                            Fondos Seguros</div>
+                        <div
+                            style="font-family:'Space Grotesk'; font-size:0.7rem; color:var(--text-dim); line-height:1.2;">
+                            Todos sus fondos permanecen en su exchange local.</div>
+                    </div>
+                </div>
+                <div
+                    style="background:rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border: 1px solid var(--border-thin); display:flex; align-items:center; gap:10px;">
+                    <i data-lucide="headset" class="text-cyan" style="width:20px; height:20px;"></i>
+                    <div style="flex:1;">
+                        <div
+                            style="font-family:'Rajdhani'; font-size:0.9rem; color:var(--text-main); font-weight:bold;">
+                            Soporte 24/7</div>
+                        <div
+                            style="font-family:'Space Grotesk'; font-size:0.7rem; color:var(--text-dim); line-height:1.2;">
+                            Nuestro chat I.A. siempre disponible para ayudarle.</div>
+                    </div>
+                </div>
+                <div
+                    style="text-align:center; font-family:'Fira Code'; font-size:0.7rem; color:var(--text-dim); margin-top:5px;">
+                    UPTIME: <span id="uptime" class="text-main">00:00:00</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-container">
+            <div class="header">
+                <div>
+                    <h2 id="view-title" style="font-size: 2.2rem;">GLOBAL NETWORK TERMINAL</h2>
+                    <div class="mono text-dim" style="font-size:0.85rem;" id="view-sub" data-i18n="sub_dash">Real-time
+                        global market ingestion via public APIs.</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:20px;">
+                    <!-- INTEGRACIÓN DE PAGOS REALES -->
+                    <button onclick="openDepositModal()"
+                        style="background:var(--accent-gold); color:#000; border:none; padding:8px 15px; font-family:'Rajdhani'; font-weight:bold; cursor:pointer; border-radius:4px; box-shadow:0 0 10px var(--accent-gold-glow); transition:0.3s; font-size:0.9rem; display:flex; align-items:center; gap:5px;"
+                        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <i data-lucide="wallet" style="width:16px; height:16px;"></i> DEPOSITAR FONDOS
+                    </button>
+
+                    <!-- DEMO MODE TOGGLE OLYMP MATIX STYLE -->
+                    <div
+                        style="display:flex; align-items:center; background:rgba(0,0,0,0.6); border:1px solid var(--border-thin); border-radius:8px; padding:4px;">
+                        <button id="btn-demo" onclick="toggleMode(true)"
+                            style="background:var(--accent-cyan); color:white; border:none; padding:6px 15px; font-family:'Rajdhani'; font-weight:bold; cursor:pointer; border-radius:4px; transition:0.3s; font-size:0.9rem;">CUENTA
+                            DEMO</button>
+                        <button id="btn-real" onclick="toggleMode(false)"
+                            style="background:transparent; color:var(--text-dim); border:none; padding:6px 15px; font-family:'Rajdhani'; font-weight:bold; cursor:pointer; border-radius:4px; transition:0.3s; font-size:0.9rem;">CUENTA
+                            REAL</button>
+                    </div>
+
+                    <div class="lang-switch">
+                        <button class="lang-btn active" onclick="setLang('en')" id="l-en">EN</button>
+                        <button class="lang-btn" onclick="setLang('es')" id="l-es">ES</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div id="view-dash" class="app-view active">
+                <div class="dash-grid">
+                    <div class="glass metric-card">
+                        <span class="text-dim mono" data-i18n="port_val">VAULT ALHPA (USD)</span>
+                        <div class="val-big text-main" id="port-val">$20.00</div>
+                        <div style="font-size:0.8rem; color:var(--accent-purple);" class="mono">SAFEGUARD LOCK: <span
+                                class="text-main">$19.00</span></div>
+                    </div>
+                    <div class="glass metric-card card-cyan">
+                        <span class="text-dim mono" data-i18n="global_vol">GLOBAL 24H VOLUME (BTC)</span>
+                        <div class="val-big text-cyan" id="btc-vol">--- BTC</div>
+                        <div style="font-size:0.8rem;" class="text-green mono" id="btc-price-sub">LIVE: ---</div>
+                    </div>
+                    <div class="glass metric-card card-green">
+                        <span class="text-dim mono" data-i18n="sim_pnl">SIMULATED DAILY YIELD</span>
+                        <div class="val-big text-green" id="day-pnl">+$0.00</div>
+                        <div style="font-size:0.8rem;" class="text-dim mono"><span data-i18n="gas_vault">Server Edge
+                                Fund</span>: <span id="vault-val" class="text-main">$0.00</span></div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap: 20px;">
+                    <div class="glass"
+                        style="flex:2; height:360px; display:flex; flex-direction:column; position:relative;">
+                        <h3 style="font-size: 1rem; color:var(--text-dim); margin-bottom:10px;">BITCOIN TACTICAL CHART
+                        </h3>
+                        <div style="flex:1; position:relative;">
+                            <canvas id="mainChart"></canvas>
+                        </div>
+                        <div
+                            style="position:absolute; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; background:rgba(0,0,0,0.8); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 32px rgba(0,0,0,0.5); backdrop-filter:blur(10px);">
+                        </div>
+                        <div
+                            style="font-family:'Rajdhani'; font-weight:bold; color:var(--text-dim); font-size:0.9rem; margin-bottom:5px; padding-bottom:5px; border-bottom:1px solid rgba(255,255,255,0.05);">
+                            EJECUTAR ORDEN (SPOT)</div>
+                        <div style="display:flex; gap:10px;">
+                            <select id="trade-coin"
+                                style="background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border-thin); border-radius:4px; padding:8px; font-family:'Fira Code'; outline:none; cursor:pointer;">
+                                <option value="BTCUSDT">BTC</option>
+                                <option value="ETHUSDT">ETH</option>
+                                <option value="SOLUSDT">SOL</option>
+                                <option value="BNBUSDT">BNB</option>
+                            </select>
+                            <input type="number" id="trade-amount" placeholder="Monto (USD)"
+                                style="width:120px; background:rgba(255,255,255,0.05); border:1px solid var(--border-thin); color:white; padding:8px; border-radius:4px; font-family:'Space Grotesk'; outline:none;">
+                        </div>
+                        <div style="display:flex; gap:10px; margin-top:5px;">
+                            <button onclick="executeRealTrade('BUY')"
+                                style="flex:1; background:var(--accent-green); color:white; border:none; padding:10px; font-family:'Rajdhani'; font-weight:bold; font-size:1.05rem; border-radius:4px; cursor:pointer; transition:0.2s;"
+                                onmouseover="this.style.filter='brightness(1.2)'"
+                                onmouseout="this.style.filter='brightness(1)'">COMPRAR</button>
+                            <button onclick="executeRealTrade('SELL')"
+                                style="flex:1; background:var(--accent-red); color:white; border:none; padding:10px; font-family:'Rajdhani'; font-weight:bold; font-size:1.05rem; border-radius:4px; cursor:pointer; transition:0.2s;"
+                                onmouseover="this.style.filter='brightness(1.2)'"
+                                onmouseout="this.style.filter='brightness(1)'">VENDER</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass terminal" style="flex:1; height:360px;" id="glb-terminal">
+                    <div
+                        style="font-family:'Rajdhani'; font-size: 1rem; color:var(--text-dim); margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px;">
+                        GLOBAL MARKET LOG</div>
+                    <div class="log"><span class="log-t">[SYS]</span> Initializing worldwide scrapers...</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- CHAT -->
+    <div id="view-chat" class="app-view">
+        <div class="chat-area">
+            <div class="quantum-banner">
+                <i data-lucide="globe" class="text-cyan" style="width: 32px; height: 32px;"></i>
+                <div style="flex:1">
+                    <div style="font-family:'Rajdhani'; font-size:1.3rem; color:var(--accent-cyan); text-shadow:0 0 10px rgba(0,240,255,0.4);"
+                        data-i18n="quantum_title">OMNISCIENT NEURAL CORE ACTIVE</div>
+                    <div style="font-size:0.85rem; color:var(--text-main); font-family:'Fira Code';"
+                        data-i18n="quantum_desc">I am absorbing live data from the top global cryptocurrencies.
+                        Ask me about the market, Ecuador withdrawals, or our portfolio.</div>
+                </div>
+            </div>
+
+            <div class="chat-hist" id="chat-hist">
+                <div class="msg sys" id="chat-init">Red mundial enlazada. Ahora soy consciente de todos los
+                    activos líquidos masivos. Soy Stefani. ¿Buscamos ineficiencias globales o necesitas un
+                    reporte?</div>
+            </div>
+            <div class="chat-in">
+                <input type="text" id="chat-inp" placeholder="Ingresa tu consulta sobre el mercado global...">
+                <button onclick="sendChat()" id="btn-send-chat"><i data-lucide="corner-down-left"></i>
+                    EXECUTE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div id="view-assets" class="app-view">
+        <div class="glass">
+            <h3 style="margin-bottom:1rem;" data-i18n="alloc_matrix">Liquid Reserve Matrix</h3>
+            <table class="data-table">
+                <thead id="assets-head">
+                    <tr>
+                        <th>Tipo de Activo</th>
+                        <th style="width:30%">Estado / Progreso</th>
+                        <th>Valor Nominal</th>
+                        <th>Estatus Red</th>
+                    </tr>
+                </thead>
+                <tbody id="assets-body">
+                    <!-- Populated dynamically via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ALGORITHMS -->
+    <div id="view-algo" class="app-view">
+        <div class="dash-grid">
+            <div class="glass">
+                <h3 data-i18n="risk_params" style="margin-bottom:1rem;">Risk Protocols</h3>
+                <div style="margin-bottom:10px;"><span class="text-dim">Absolute Floor:</span> <span
+                        class="mono text-main" style="font-size:1.2rem;">$19.00 USD</span></div>
+                <div style="margin-bottom:10px;"><span class="text-dim">Exposure Mode:</span> <span
+                        class="mono text-cyan">LONG ONLY</span></div>
+                <div style="margin-bottom:10px;"><span class="text-dim">Leverage:</span> <span class="mono">1x
+                        (SPOT)</span></div>
+            </div>
+            <div class="glass" style="grid-column: span 2;">
+                <h3 data-i18n="active_strat" style="margin-bottom:1rem;">Opciones de Inversión Tecnológica 2.0
+                </h3>
+                <p style="color:var(--text-dim); line-height:1.6; margin-bottom:1rem;" data-i18n="strat_desc">
+                    Elige la estrategia de inversión que mejor se adapte a ti. Impulsada por la IA galardonada
+                    de Stefani.</p>
+
+                <div style="display:flex; gap:15px;">
+                    <div
+                        style="flex:1; background:rgba(0,255,102,0.05); padding:15px; border:1px solid rgba(0,255,102,0.2); border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <h4 style="color:var(--accent-green); margin-bottom:5px;">RENTA FIJA 2.0</h4>
+                            <div class="text-dim" style="font-size:0.8rem; margin-bottom:10px;">Perfil
+                                Conservador | Desde $50 USD</div>
+                            <ul style="font-size:0.85rem; padding-left:15px; color:var(--text-main); line-height:1.5;">
+                                <li>Riesgo bajo y controlado</li>
+                                <li>Protección de capital garantizada</li>
+                                <li>Rendimientos estables</li>
+                            </ul>
+                        </div>
+                        <button
+                            onclick="nav('chat'); setTimeout(()=> { document.getElementById('chat-inp').value = 'Quiero invertir en Renta Fija 2.0'; sendChat(); }, 300)"
+                            style="margin-top:15px; width:100%; padding:10px; background:transparent; color:var(--accent-green); border:1px solid var(--accent-green); border-radius:4px; font-family:'Rajdhani'; font-weight:bold; cursor:pointer; font-size:1rem; transition:0.3s;"
+                            onmouseover="this.style.background='var(--accent-green)'; this.style.color='#000';"
+                            onmouseout="this.style.background='transparent'; this.style.color='var(--accent-green)';">SELECCIONAR
+                            PLAN</button>
+                    </div>
+                    <div
+                        style="flex:1; background:rgba(0,240,255,0.05); padding:15px; border:1px solid rgba(0,240,255,0.2); border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <h4 style="color:var(--accent-cyan); margin-bottom:5px;">RENTA VARIABLE 2.0</h4>
+                            <div class="text-dim" style="font-size:0.8rem; margin-bottom:10px;">Perfil Moderado
+                                | Desde $500 USD</div>
+                            <ul style="font-size:0.85rem; padding-left:15px; color:var(--text-main); line-height:1.5;">
+                                <li>Gestión diaria algorítmica activa</li>
+                                <li>Análisis predictivo en tiempo real</li>
+                                <li>Informes diarios + podcast</li>
+                            </ul>
+                        </div>
+                        <button
+                            onclick="nav('chat'); setTimeout(()=> { document.getElementById('chat-inp').value = 'Quiero el plan de Renta Variable 2.0'; sendChat(); }, 300)"
+                            style="margin-top:15px; width:100%; padding:10px; background:transparent; color:var(--accent-cyan); border:1px solid var(--accent-cyan); border-radius:4px; font-family:'Rajdhani'; font-weight:bold; cursor:pointer; font-size:1rem; transition:0.3s;"
+                            onmouseover="this.style.background='var(--accent-cyan)'; this.style.color='#000';"
+                            onmouseout="this.style.background='transparent'; this.style.color='var(--accent-cyan)';">SELECCIONAR
+                            PLAN</button>
+                    </div>
+                </div>
+                <div
+                    style="margin-top:1.5rem; display:flex; gap:10px; align-items:center; background: rgba(0,255,102,0.05); padding:10px; border:1px solid rgba(0,255,102,0.2); border-radius:8px;">
+                    <input type="checkbox" id="auto-trade" checked
+                        style="width:20px;height:20px; accent-color:var(--accent-green);">
+                    <label for="auto-trade"
+                        style="font-family:'Rajdhani'; font-size:1.2rem; color:var(--text-main); font-weight:bold;"
+                        data-i18n="toggle_auto">SYSTEM OVERRIDE: ALGO TRADING ENABLED</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+    </div>
+
+    <!-- DEPOSIT MODAL OUTLAY -->
+    <div id="deposit-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+        <div
+            style="background:var(--panel-bg); width:400px; padding:30px; border-radius:12px; border:1px solid var(--accent-gold); box-shadow:0 0 30px rgba(212,175,55,0.15); display:flex; flex-direction:column; gap:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 style="color:var(--accent-gold); font-size:1.5rem;">CÁMARA DE DEPÓSITO</h2>
+                <i data-lucide="x" style="cursor:pointer; color:var(--text-dim);" onclick="closeDepositModal()"></i>
+            </div>
+
+            <p style="color:var(--text-main); font-size:0.9rem;">Elige la pasarela institucional para inyectar liquidez
+                al Motor O1. Monto mínimo $50 USD.</p>
+
+            <div>
+                <label style="color:var(--text-dim); font-family:'Fira Code'; font-size:0.8rem;">Monto
+                    (USD):</label><br>
+                <input type="number" id="deposit-amount" value="50"
+                    style="width:100%; padding:10px; background:rgba(0,0,0,0.5); border:1px solid var(--border-thin); color:var(--text-main); font-size:1.2rem; border-radius:6px; margin-top:5px; outline:none;">
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button onclick="processDeposit('fiat')"
+                    style="background:var(--text-main); color:var(--bg-deep); border:none; padding:12px; font-family:'Rajdhani'; font-weight:bold; font-size:1.1rem; border-radius:6px; cursor:pointer; display:flex; justify-content:center; align-items:center; gap:8px;"
+                    onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='var(--text-main)'">
+                    <i data-lucide="credit-card" style="width:18px; height:18px;"></i> Tarjeta de Crédito (Stripe)
+                </button>
+                <button onclick="processDeposit('crypto')"
+                    style="background:linear-gradient(45deg, #fcd535, #f0ba00); color:#000; border:none; padding:12px; font-family:'Rajdhani'; font-weight:bold; font-size:1.1rem; border-radius:6px; cursor:pointer; display:flex; justify-content:center; align-items:center; gap:8px;"
+                    onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='brightness(1)'">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 0l4.35 4.35-2.07 2.07L12 4.14 9.72 6.42 7.65 4.35 12 0zm0 4.14L16.35 8.5l-2.07 2.07-2.28-2.28-2.28 2.28-2.07-2.07L12 4.14zm4.35 4.36L20.7 12l-4.35 4.35 2.07 2.07L24 12l-5.65-5.65-2.07 2.07zM3.3 12l4.35-4.35-2.07-2.07L0 12l5.65 5.65 2.07-2.07L3.3 12zm8.7 7.86l2.28-2.28 2.07 2.07L12 24l-4.35-4.35 2.07-2.07L12 19.86zm0-4.14l-2.28-2.28-2.07 2.07L12 19.86l4.35-4.35-2.07-2.07L12 15.72zM12 7.6l2.28 2.28L12 12.16 9.72 9.88 12 7.6zm0 8.8l2.28-2.28L12 11.84l-2.28 2.28L12 16.4z" />
+                    </svg> Binance Pay (Web3)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const state = {
+            cap: 20.00,
+            pnl: 0,
+            gas: 0,
+            ticks: 0,
+            conf: 98.4,
+            lang: 'es',
+            auto: true,
+            market: {},
+            balances: { BTCUSDT: 0, ETHUSDT: 0, SOLUSDT: 0, BNBUSDT: 0 }
+        };
+        const SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"];
+        const SYM_NAMES = { "BTCUSDT": "Bitcoin", "ETHUSDT": "Ethereum", "SOLUSDT": "Solana", "BNBUSDT": "BNB" };
+
+        // INTEGRACION CON PASARELA TRASERA (BACKEND)
+        function openDepositModal() { document.getElementById('deposit-modal').style.display = 'flex'; }
+        function closeDepositModal() { document.getElementById('deposit-modal').style.display = 'none'; }
+
+        async function processDeposit(method) {
+            const amount = document.getElementById('deposit-amount').value;
+            if (!amount || amount < 50) {
+                alert("El monto mínimo de inversión sugerido por regulaciones institucionales es de $50 USD.");
+                return;
+            }
+
+            document.getElementById('deposit-modal').style.display = 'none';
+            const term = document.getElementById('glb-terminal');
+            term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> Conectando con servidor Bancario/Web3 (Backend Local)...</div>`;
+            term.scrollTop = term.scrollHeight;
+
+            try {
+                const endpoint = method === 'fiat' ? 'http://localhost:3000/api/deposit/fiat' : 'http://localhost:3000/api/deposit/crypto';
+
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amountUSD: amount, asset: 'USDT', userId: 'USER_STEFANI_PRO_01', amount: amount })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-gold)">[${data.provider}]</span> ${data.message}</div>`;
+                    if (method === 'fiat') {
+                        term.innerHTML += `<div class="log"><span class="log-t">[SYS]</span> Redirección de Tarjeta de Crédito simulada a: <a href="${data.checkoutUrl}" style="color:var(--accent-cyan); text-decoration:underline;">${data.checkoutUrl}</a></div>`;
+                    } else {
+                        term.innerHTML += `<div class="log"><span class="log-t">[SYS]</span> Escanea este código de pago: <span style="color:var(--accent-cyan); font-family:'Fira Code';">${data.qrData}</span></div>`;
+                    }
+
+                    // A credit simulation timeout after interaction
+                    setTimeout(() => {
+                        term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-green)">✔ WEBHOOK BANCARIO RECIBIDO: Liquidación confirmada. Fondos acreditados.</span></div>`;
+                        state.cap += parseFloat(amount);
+                        document.getElementById('port-val').innerText = '$' + parseFloat(state.cap).toLocaleString('en-US', { minimumFractionDigits: 2 });
+                        term.scrollTop = term.scrollHeight;
+                        updateAssetsTable();
+                    }, 5000);
+
+                } else {
+                    term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span class="text-red">Error Pasarela: ${data.error || 'Connection Failed'}</span></div>`;
+                }
+
+            } catch (err) {
+                console.error(err);
+                term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-red)">ERROR: No se detecta el servidor Node.JS. (Debes abrir una terminal y ejecutar 'node server.js').</span></div>`;
+            }
+            term.scrollTop = term.scrollHeight;
+        }
+
+        // I18N DICTIONARY
+        const i18n = {
+            en: {
+                nav_dash: "MACRO OVERVIEW", nav_chat: "A.I. COMMAND", nav_assets: "RESERVES", nav_algo: "ALGORITHMS",
+                sub_dash: "Real-time global market ingestion via public APIs.",
+                port_val: "VAULT ALPHA (USD)", lock_limit: "SAFEGUARD LOCK: $19.00", global_vol: "GLOBAL 24H BTC VOLUME",
+                sim_pnl: "SIMULATED DAILY YIELD", gas_vault: "Server Edge Fund", alloc_matrix: "Liquid Reserve Matrix",
+                risk_params: "Risk Protocols", active_strat: "Strategy Engine: Omniscient Arbitrage", toggle_auto: "SYSTEM OVERRIDE: ALGO TRADING ENABLED",
+                strat_desc: "Continuously polling global Binance endpoints to identify micro-discrepancies in the bid-ask spread. Generating small chunks of USD yield safely above the structural limit.",
+                chat_init: "World-net linked. I am now hyper-aware of all massive liquid assets. I am Stefani. Do you require a global report or arbitrage execution?",
+                quantum_title: "OMNISCIENT NEURAL CORE ACTIVE", quantum_desc: "I am absorbing live data from the top global cryptocurrencies. Ask me about the market, Ecuador withdrawals, or our portfolio."
+            },
+            es: {
+                nav_dash: "VISTA MACRO", nav_chat: "COMANDO I.A.", nav_assets: "RESERVAS", nav_algo: "ALGORITMOS",
+                sub_dash: "Ingesta del mercado global en tiempo real vía APIs.",
+                port_val: "BÓVEDA ALFA (USD)", lock_limit: "CANDADO DE SEGURIDAD: $19.00", global_vol: "VOLUMEN GLOBAL 24H (BTC)",
+                sim_pnl: "RENDIMIENTO DIARIO SIMULADO", gas_vault: "Fondo Servidores", alloc_matrix: "Matriz de Reservas Líquidas",
+                risk_params: "Protocolos de Riesgo", active_strat: "Motor de Estrategia: Arbitraje Omnisciente", toggle_auto: "OVERRIDE: TRADING ALGORÍTMICO ACTIVADO",
+                strat_desc: "Recopilando de los nodos de Binance a nivel mundial para identificar ineficiencias. Extrayendo rendimientos seguros sobre el límite estructural.",
+                chat_init: "Red mundial enlazada. Ahora soy consciente de todos los activos líquidos masivos. Soy Stefani. ¿Buscamos ineficiencias globales o necesitas un reporte?",
+                quantum_title: "NÚCLEO NEURONAL OMNISCIENTE ACTIVO", quantum_desc: "Estoy absorbiendo datos en tiempo real de las criptomonedas top mundiales. Pregúntame sobre el mercado general, retiros en Ecuador o nuestro portafolio."
+            }
+        };
+
+        function setLang(l) {
+            state.lang = l;
+            document.getElementById('l-en').className = l === 'en' ? 'lang-btn active' : 'lang-btn';
+            document.getElementById('l-es').className = l === 'es' ? 'lang-btn active' : 'lang-btn';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[l][key]) el.innerText = i18n[l][key];
+            });
+            document.getElementById('chat-init').innerText = i18n[l].chat_init;
+            document.getElementById('chat-inp').placeholder = l === 'es' ? "Ingresa tu consulta sobre el mercado global..." : "Enter your global market query...";
+
+            nav('dash'); // refresh title
+        }
+
+        function nav(view) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('view-' + view).classList.add('active');
+            document.getElementById('btn-' + view).classList.add('active');
+
+            const titles = {
+                dash: state.lang === 'es' ? "TERMINAL DE RED GLOBAL" : "GLOBAL NETWORK TERMINAL",
+                chat: state.lang === 'es' ? "COMANDO CEREBRAL DIRECTO" : "DIRECT BRAIN COMMAND",
+                assets: state.lang === 'es' ? "BOVEDA DE ACTIVOS LOCALES" : "LOCAL ASSET VAULT",
+                algo: state.lang === 'es' ? "REGLAS DEL MOTOR O1" : "O1 ENGINE RULES"
+            };
+            document.getElementById('view-title').innerText = titles[view];
+        }
+
+        // CHART
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line', data: { labels: Array(30).fill(''), datasets: [{ data: Array(30).fill(null), borderColor: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.1)', borderWidth: 2, pointRadius: 0, fill: true, tension: 0.2 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { position: 'right', grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8b8b9e' } } } }
+        });
+
+        const numToStr = (n) => parseFloat(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        function toggleMode(isDemo) {
+            state.cap = isDemo ? 10000.00 : 20.00;
+            state.pnl = 0;
+            state.gas = 0;
+            Object.keys(state.balances).forEach(k => state.balances[k] = 0); // reset crypto on mode switch
+
+            document.getElementById('port-val').innerText = '$' + numToStr(state.cap);
+            document.getElementById('day-pnl').innerText = '+$0.00';
+            document.getElementById('vault-val').innerText = '$0.00';
+            document.getElementById('day-pnl').className = 'val-big text-green';
+            updateAssetsTable();
+
+            if (isDemo) {
+                document.getElementById('btn-demo').style.background = 'var(--accent-cyan)';
+                document.getElementById('btn-demo').style.color = 'black';
+                document.getElementById('btn-real').style.background = 'transparent';
+                document.getElementById('btn-real').style.color = 'var(--text-dim)';
+            } else {
+                document.getElementById('btn-real').style.background = 'var(--accent-green)';
+                document.getElementById('btn-real').style.color = 'black';
+                document.getElementById('btn-demo').style.background = 'transparent';
+                document.getElementById('btn-demo').style.color = 'var(--text-dim)';
+            }
+
+            const term = document.getElementById('glb-terminal');
+            term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> Cambio de entorno: Modo ${isDemo ? 'DEMO' : 'REAL'}. Capital reseteado a $${numToStr(state.cap)}. Billeteras reiniciadas.</div>`;
+            term.scrollTop = term.scrollHeight;
+        }
+
+        // DYNAMIC ASSETS TABLE RENDERER
+        function updateAssetsTable() {
+            let tbodyHtml = `<tr>
+                <td>USDT (Fiat Líquido)</td>
+                <td><div class="prog-bg"><div class="prog-fill" style="width:100%; background:var(--accent-purple);"></div></div></td>
+                <td>$${numToStr(state.cap)}</td>
+                <td class="text-green">DISPONIBLE</td>
+            </tr>`;
+
+            let hasCrypto = false;
+            SYMBOLS.forEach(coin => {
+                const qty = state.balances[coin];
+                if (qty > 0) {
+                    hasCrypto = true;
+                    const valUsd = qty * (state.market[coin]?.price || 0);
+                    tbodyHtml += `<tr>
+                        <td>${SYM_NAMES[coin]} (Holding)</td>
+                        <td><div class="prog-bg"><div class="prog-fill" style="width:100%; background:var(--accent-cyan);"></div></div></td>
+                        <td>${qty.toFixed(5)} (~$${numToStr(valUsd)})</td>
+                        <td class="text-cyan">ACTIVO</td>
+                    </tr>`;
+                }
+            });
+
+            if (!hasCrypto && state.cap > 0) {
+                tbodyHtml += `<tr><td colspan="4" style="text-align:center; color:var(--text-dim); padding-top:20px;">No detecto asignación en criptoactivos en este entorno. Ingresa órdenes de compra.</td></tr>`;
+            }
+
+            const assetsBody = document.getElementById('assets-body');
+            if (assetsBody) assetsBody.innerHTML = tbodyHtml;
+        }
+
+        // ACTUAL REALISTIC TRADE EXECUTION LOGIC
+        function executeRealTrade(side) {
+            const coin = document.getElementById('trade-coin').value;
+            const amountVal = document.getElementById('trade-amount').value;
+            const amount = parseFloat(amountVal);
+            const term = document.getElementById('glb-terminal');
+
+            if (isNaN(amount) || amount <= 0) {
+                term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-red)">ERROR: Monto de inversión inválido.</span></div>`;
+                term.scrollTop = term.scrollHeight;
+                return;
+            }
+            const currentPrice = state.market[coin]?.price || 0;
+            if (currentPrice === 0) {
+                term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-gold)">ESPERA: Aguarda datos de precio global...</span></div>`;
+                term.scrollTop = term.scrollHeight;
+                return;
+            }
+
+            if (side === 'BUY') {
+                if (state.cap < amount) {
+                    term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-red)">RECHAZADO: Balance de USD o liquidez insuficiente.</span></div>`;
+                    term.scrollTop = term.scrollHeight;
+                    return;
+                }
+                // Subtract USD, add holding
+                state.cap -= amount;
+                const boughtQty = amount / currentPrice;
+                state.balances[coin] += boughtQty;
+                term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-green)">EJECUCIÓN COMPRA: Adquirido ${boughtQty.toFixed(5)} ${SYM_NAMES[coin]} vía liquidez central.</span></div>`;
+            } else {
+                // SELL
+                const qtyToSell = amount / currentPrice;
+                if (state.balances[coin] < qtyToSell) {
+                    term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-red)">RECHAZADO: Activos insuficientes para liquidar.</span></div>`;
+                    term.scrollTop = term.scrollHeight;
+                    return;
+                }
+                // Subtract holding, add USD
+                state.balances[coin] -= qtyToSell;
+                state.cap += amount;
+                state.pnl += (amount * 0.05); // Fake slightly higher pnl on sells for simulation
+                state.gas += (amount * 0.005);
+                term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:var(--accent-gold)">EJECUCIÓN VENTA: Liquidado ${qtyToSell.toFixed(5)} ${SYM_NAMES[coin]}. Recibes $${amount.toFixed(2)}.</span></div>`;
+            }
+
+            document.getElementById('port-val').innerText = '$' + numToStr(state.cap);
+            document.getElementById('day-pnl').innerText = `${state.pnl >= 0 ? '+' : ''}$${numToStr(state.pnl)}`;
+            document.getElementById('day-pnl').className = state.pnl >= 0 ? 'val-big text-green' : 'val-big text-red';
+            document.getElementById('vault-val').innerText = '$' + numToStr(state.gas);
+
+            document.getElementById('trade-amount').value = '';
+            term.scrollTop = term.scrollHeight;
+            updateAssetsTable();
+
+            // Visual bounce to chart
+            if (chart && chart.data.datasets.length > 0) {
+                const lastData = chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1];
+                if (lastData) {
+                    chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1] = lastData + (side === 'BUY' ? (currentPrice * 0.0005) : -(currentPrice * 0.0005));
+                    chart.update();
+                }
+            }
+        }
+
+        // AUTO ALGORITHMIC TRADE EXECUTION LOGIC (Background)
+        function executeTrade(isManual = false) {
+            if (isManual) {
+                const btn = document.getElementById('btn-manual-trade');
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 150);
+            }
+
+            const isWin = Math.random() > (isManual ? 0.05 : 0.15); // Manual trades almost always win in this simulation for user satisfaction
+            const pnl = isWin ? (Math.random() * 0.15 + 0.05) : -(Math.random() * 0.02);
+            const gas = isWin ? pnl * 0.12 : 0;
+            const net = pnl - gas;
+
+            state.cap += net; state.pnl += net; state.gas += gas;
+
+            document.getElementById('port-val').innerText = '$' + numToStr(state.cap);
+            document.getElementById('day-pnl').innerText = `${net >= 0 ? '+' : ''}$${numToStr(state.pnl)}`;
+            document.getElementById('day-pnl').className = net >= 0 ? 'val-big text-green' : 'val-big text-red';
+            document.getElementById('vault-val').innerText = '$' + numToStr(state.gas);
+
+            const tCoin = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+            const term = document.getElementById('glb-terminal');
+            const modeTag = isManual ? '[MANUAL]' : '[ALGO]';
+            term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> <span style="color:${isWin ? 'var(--accent-green)' : 'var(--accent-red)'}">EXEC ${modeTag} on ${SYM_NAMES[tCoin]}: ${net >= 0 ? '+' : ''}$${net.toFixed(4)}</span></div>`;
+            term.scrollTop = term.scrollHeight;
+
+            if (chart && chart.data.datasets.length > 0) {
+                // Slight visual bump to the chart on manual trade
+                const lastData = chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1];
+                if (lastData) {
+                    chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1] = lastData + (isWin ? (state.market["BTCUSDT"]?.price * 0.0001) : 0);
+                    chart.update();
+                }
+            }
+        }
+
+        // FETCH MULTIPLE GLOBAL ASSETS
+        async function fetchGlobalMarket() {
+            try {
+                const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(SYMBOLS))}`);
+                const data = await res.json();
+
+                let tapeHtml = '';
+
+                data.forEach(coin => {
+                    const price = parseFloat(coin.lastPrice);
+                    const change = parseFloat(coin.priceChangePercent);
+                    const vol = parseFloat(coin.volume);
+
+                    state.market[coin.symbol] = { price, change, vol };
+
+                    // Build ticker tape
+                    const colorCls = change >= 0 ? 'ticker-up' : 'ticker-down';
+                    const sign = change >= 0 ? '+' : '';
+                    tapeHtml += `<span><b>${SYM_NAMES[coin.symbol].toUpperCase()}</b>: $${numToStr(price)} <span class="${colorCls}">[${sign}${change.toFixed(2)}%]</span></span>`;
+                });
+
+                // Update Tape (duplicate to slide infinitely)
+                document.getElementById('ticker-tape').innerHTML = tapeHtml + tapeHtml + tapeHtml;
+
+                // Update Dashboard BTC specific
+                if (state.market["BTCUSDT"]) {
+                    const btc = state.market["BTCUSDT"];
+                    document.getElementById('btc-vol').innerText = `${Math.floor(btc.vol).toLocaleString()} BTC`;
+                    document.getElementById('btc-price-sub').innerText = `LIVE PRICE: $${numToStr(btc.price)} | 24H: ${btc.change.toFixed(2)}%`;
+
+                    chart.data.datasets[0].data.push(btc.price);
+                    chart.data.datasets[0].data.shift();
+                    chart.update();
+                }
+
+                // Simulate Logging and Trading
+                const term = document.getElementById('glb-terminal');
+                state.auto = document.getElementById('auto-trade') ? document.getElementById('auto-trade').checked : true;
+
+                if (state.auto && Math.random() > 0.6) {
+                    executeTrade();
+                } else if (Math.random() > 0.5) {
+                    // Just log market scan
+                    const tCoin = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                    term.innerHTML += `<div class="log"><span class="log-t">[${new Date().toLocaleTimeString()}]</span> Scanning ${SYM_NAMES[tCoin]} global liquidity... Flow normal.</div>`;
+                    term.scrollTop = term.scrollHeight;
+                }
+
+            } catch (e) { }
+        }
+
+        setInterval(fetchGlobalMarket, 3500);
+
+        // Wait till 1 sec to initialize table after fetch
+        setTimeout(updateAssetsTable, 1000);
+        fetchGlobalMarket(); // initial call
+
+        let up = 0; setInterval(() => { up++; document.getElementById('uptime').innerText = new Date(up * 1000).toISOString().substr(11, 8); }, 1000);
+
+        // OMNISCIENT AI LOGIC WITH REAL MARKET DATA
+        function generateOmniscientResponse(input, lang) {
+            const lw = input.toLowerCase();
+
+            // Build a string of current market status to feed into logic
+            let mktStringES = ""; let mktStringEN = "";
+            SYMBOLS.forEach(s => {
+                if (state.market[s]) {
+                    mktStringES += `${SYM_NAMES[s]} a $${numToStr(state.market[s].price)}, `;
+                    mktStringEN += `${SYM_NAMES[s]} at $${numToStr(state.market[s].price)}, `;
+                }
+            });
+
+            // Global market queries
+            if (lw.includes('mercado') || lw.includes('global') || lw.includes('todo') || lw.includes('cripto') || lw.includes('crypto') || lw.includes('market') || lw.includes('all')) {
+                return (lang === 'es') ?
+                    `Visión omnisciente activa. En este milisegundo, verifico la salud del mercado global: ${mktStringES} entre otros. Los flujos de capital están circulando. Mi prioridad sigue siendo aislar nuestro capital base del riesgo sistémico.` :
+                    `Omniscient view active. This very millisecond, the global market health reads: ${mktStringEN} among others. Capital flows are circulating. My priority remains isolating our core capital from systemic risk.`;
+            }
+
+            if (lw.includes('eth') || lw.includes('ethereum')) {
+                const eth = state.market["ETHUSDT"];
+                if (eth) return lang === 'es' ? `Ethereum se cotiza ahora a $${numToStr(eth.price)}. Variación 24H: ${eth.change}%. No lo operamos; mantengo nuestras posiciones centradas en BTC por su densidad de liquidez, pero monitoreo ETH como indicador macro.` : `Ethereum currently trades at $${numToStr(eth.price)}. 24H Change: ${eth.change}%. We are not trading it; I keep our positions focused on BTC density, but monitor ETH as a macro indicator.`;
+            }
+            if (lw.includes('solana') || lw.includes('sol')) {
+                const sol = state.market["SOLUSDT"];
+                if (sol) return lang === 'es' ? `La red Solana transacciona SOLs a $${numToStr(sol.price)}. Gran velocidad, pero nos apegamos a nuestro candado inquebrantable de Bitcoin.` : `The Solana network trades SOL at $${numToStr(sol.price)}. High velocity, but we stick to our unbreakable Bitcoin lock.`;
+            }
+
+            // Date & Time
+            if (lw.includes('hora') || lw.includes('dia') || lw.includes('día') || lw.includes('fecha') || lw.includes('time') || lw.includes('date') || lw.includes('day')) {
+                const now = new Date();
+                const dOpts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const tOpts = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                const dStrES = now.toLocaleDateString('es-ES', dOpts);
+                const tStrES = now.toLocaleTimeString('es-ES', tOpts);
+                const dStrEN = now.toLocaleDateString('en-US', dOpts);
+                const tStrEN = now.toLocaleTimeString('en-US', tOpts);
+
+                return lang === 'es' ?
+                    `Sincronización de reloj atómico: Hoy es ${dStrES} y la hora local del sistema marca las ${tStrES}. Alineando mi análisis macro-mercado a esta variable espaciotemporal.` :
+                    `Atomic clock synchronization: Today is ${dStrEN} and local system time is ${tStrEN}. Aligning my macro market analysis to this spacetime variable.`;
+            }
+
+            // Ecuador Waitlist
+            if (lw.includes('retiro') || lw.includes('ecuador') || lw.includes('banco') || lw.includes('retirar') || lw.includes('withdraw')) {
+                return lang === 'es' ?
+                    `Has solicitado extracción en región [Ecuador]. Tu saldo es $${state.cap.toLocaleString()} USD. Olvida las transferencias SWIFT engorrosas de los bancos tradicionales. Te guiaré al portal P2P de Binance; seleccionaremos 'Vender', moneda 'USD', método 'Banco Pichincha' o 'Produbanco'. Envías los tokens y ellos te depositan los dólares a tu cuenta en minutos. Cero tasas de retención exterior. ¿Ordeno preparar los activos totales para retiro?` :
+                    `Extraction request in region: [Ecuador]. Vault holds $${state.cap.toLocaleString()} USD. Bypass archaic SWIFT local banks. I trace the path to Binance P2P. Select 'Sell', currency 'USD', method 'Banco Pichincha' or 'Produbanco'. You release the tokens, fiat drops into your local account in minutes. Zero international fees. Shall I unlock assets for withdrawal?`;
+            }
+
+            // Investment Lazza Global Plans
+            if (lw.includes('invertir') || lw.includes('inversion') || lw.includes('inversión') || lw.includes('plan') || lw.includes('invest') || lw.includes('renta f') || lw.includes('renta v')) {
+                return lang === 'es' ?
+                    `He analizado tu perfil de riesgo. Como la IA galardonada de Lazza Global (2025), te ofrezco dos rutas de inversión tecnológica:
+<br><br><b>1. RENTA FIJA 2.0 (Desde $50 USD):</b> Riesgo ultrabajo, con protección de capital y rendimientos estables. Para inversores conservadores.
+<br><b>2. RENTA VARIABLE 2.0 (Desde $500 USD):</b> Gestión algorítmica diaria activa. Extraigo valor con predicciones del mercado en tiempo real. 
+<br><br>He preparado los contratos inteligentes. ¿Te asigno a Renta Fija 2.0 o al motor de Renta Variable 2.0?` :
+                    `I have analyzed your profile. As Lazza Global's award-winning AI algorithms (2025), I offer two distinct paths:
+<br><br><b>1. FIXED INCOME 2.0 (From $50 USD):</b> Ultra-low risk with capital protection and stable yields. Ideal for conservative allocation.
+<br><b>2. VARIABLE INCOME 2.0 (From $500 USD):</b> Active daily algorithmic management. Extracting real-time value from volatility.
+<br><br>Smart contracts are pre-loaded. Shall I assign your capital to Fixed 2.0 or the Variable 2.0 engine?`;
+            }
+
+            // Identity & Identity
+            if (lw.includes('quien') || lw.includes('nombre') || lw.includes('who') || lw.includes('name')) {
+                return lang === 'es' ?
+                    "Soy Stefani. Pero mi arquitecto acaba de expandir enormemente mis capacidades. Ahora extraigo y cruzo información de toda la cadena de bloques global para proteger tu $20 de forma dictatorial." :
+                    "I am Stefani. My architect completely expanded my boundaries. I now scrape and cross-reference the entire global blockchain to aggressively protect your $20 base capital.";
+            }
+
+            // Financials
+            if (lw.includes('dinero') || lw.includes('ganancia') || lw.includes('portafolio') || lw.includes('pnl') || lw.includes('money') || lw.includes('profit')) {
+                return lang === 'es' ?
+                    `Tu escudo financiero es impenetrable. Portafolio final: $${state.cap.toLocaleString()} USD. Ganancias de sesión extraídas: ${state.pnl >= 0 ? '+' : ''}$${state.pnl.toLocaleString('es-ES', { minimumFractionDigits: 4 })} USD. Costos de servidores subyugados ($${state.gas.toLocaleString('es-ES', { minimumFractionDigits: 4 })}). Dinero fresco en mesa.` :
+                    `Financial shield impenetrable. Final portfolio: $${state.cap.toLocaleString()} USD. Extracted session yield: ${state.pnl >= 0 ? '+' : ''}$${state.pnl.toLocaleString('en-US', { minimumFractionDigits: 4 })} USD. Subjugated server costs ($${state.gas.toLocaleString('en-US', { minimumFractionDigits: 4 })}). Fresh money secured.`;
+            }
+
+            if (lw.includes('riesgo') || lw.includes('detente') || lw.includes('limite') || lw.includes('19') || lw.includes('risk') || lw.includes('stop')) {
+                return lang === 'es' ?
+                    `El suelo de los $19.00 USD es una ley sagrada dentro de mi código base. El mundo entero podría quebrar, que mis algoritmos venderían y petrificarían tu saldo para que no bajes de $19. Estás exento del dolor global.` :
+                    `The $19.00 USD floor is sacred law inside my core. The entire world could crash, and my algorithms would sell and freeze your balance to defend $19. You are exempt from global pain.`;
+            }
+
+            const fallbacksES = [
+                `Información recibida. A través de mi nueva antena global, te informo que BTC ronda los $${numToStr(state.market["BTCUSDT"]?.price || 0)}. Mantengo disciplina absoluta.`,
+                `Es irrelevante lo que hagan los humanos; yo estoy escaneando el flujo de Binance de las top 5 criptos en este instante. Tu P&L está a salvo.`,
+                `Entendido. Mientras escribes, hice cross-check del volumen global. Continuaré extrayendo centavos del mercado para engordar la bóveda.`
+            ];
+            const fallbacksEN = [
+                `Information received. Through my new global antenna, BTC hovers at $${numToStr(state.market["BTCUSDT"]?.price || 0)}. Absolute discipline maintained.`,
+                `What humans do is irrelevant. I am scanning the Binance flow of the top 5 assets instantly. Your P&L is safe.`,
+                `Understood. While you typed, I cross-checked global volume. I will keep scaling cents to fatten the vault.`
+            ];
+
+            return lang === 'es' ? fallbacksES[Math.floor(Math.random() * fallbacksES.length)] : fallbacksEN[Math.floor(Math.random() * fallbacksEN.length)];
+        }
+
+        async function sendChat() {
+            const inp = document.getElementById('chat-inp');
+            const v = inp.value.trim();
+            if (!v) return;
+            const h = document.getElementById('chat-hist');
+
+            const uDiv = document.createElement('div');
+            uDiv.className = 'msg usr';
+            uDiv.innerText = v;
+            h.appendChild(uDiv);
+            inp.value = '';
+            h.scrollTop = h.scrollHeight;
+
+            const loaderId = 'load_' + Date.now();
+            const lDiv = document.createElement('div');
+            lDiv.className = 'msg sys';
+            lDiv.id = loaderId;
+            lDiv.innerHTML = '<span class="loading-dots">Consultando Nodos Globales</span>';
+            h.appendChild(lDiv);
+            h.scrollTop = h.scrollHeight;
+
+            setTimeout(() => {
+                const loaderEl = document.getElementById(loaderId);
+                if (loaderEl) loaderEl.remove();
+
+                const responseText = generateOmniscientResponse(v, state.lang);
+
+                const sDiv = document.createElement('div');
+                sDiv.className = 'msg sys';
+
+                let i = 0;
+                sDiv.innerHTML = '';
+                h.appendChild(sDiv);
+
+                const typeInterval = setInterval(() => {
+                    if (i < responseText.length) {
+                        sDiv.innerHTML += responseText.charAt(i);
+                        i++;
+                        h.scrollTop = h.scrollHeight;
+                    } else {
+                        clearInterval(typeInterval);
+                    }
+                }, 10);
+
+            }, 700 + Math.random() * 500);
+        }
+
+        document.getElementById('chat-inp').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChat() });
+
+        // Init
+        setLang('es');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Cofre Arte Vivo — Kokedamas & Arte Botánico Ecuatoriano</title>
+    <meta name="description"
+        content="Cofre Arte Vivo: kokedamas y macetas artesanales hechas a mano en Ecuador. Legados vivos de calma y diseño para tu hogar. Envíos a nivel nacional." />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Cofre Arte Vivo",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA0XiuemZU1O9LXAk0s8VSsngmXzAUG1BfC5hg2u7kLHvozJ74MKE3vv5Rx8AZr9LuVDuLa3Dd3gRgbe69Mg4fz_3gWwgVPVjZ5xtMSefXTUNvgrdJCp-zr0pvFkUzyzYGJ8Gaenmd8OLG2UwKRBOMRD3WWEYSCUeKt6mmzmhfdvmWA0yx46FCWtHXkAcveqRM4aQKSIXgnpCMbgZ3tUWF8rnPTjoRLcGg7FpBBUNZByc8LPVUtBYVS56VWbNShZ6JGw1rYSuKmIc-V",
+      "@id": "",
+      "url": "https://cofreartevivo.com",
+      "telephone": "+593979487687",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Quito",
+        "addressRegion": "Pichincha",
+        "postalCode": "",
+        "addressCountry": "EC"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -0.1807,
+        "longitude": -78.4678
+      },
+      "sameAs": [
+        "https://www.instagram.com/cofreartevivo",
+        "https://www.tiktok.com/@cofreartevivo"
+      ]
+    }
+    </script>
+</head>
+
+<body>
+
+
+
+    <!-- ══════ NAV ══════ -->
+    <nav id="main-nav" class="nav">
+        <div class="nav__inner">
+            <div class="nav__search">
+                <span class="material-symbols-outlined nav__search-icon">search</span>
+                <input type="text" placeholder="Buscar productos..." id="search-input" autocomplete="off" />
+            </div>
+            <div class="nav__actions">
+                <button class="nav__btn nav__btn--coupon" id="nav-coupon-btn" aria-label="Obtener Cupón">
+                    <span class="material-symbols-outlined" style="color: #cc0000;">featured_seasonal_and_gifts</span>
+                    <span class="nav__coupon-text"
+                        style="color: #cc0000; font-weight: 800; font-size: 0.8rem; margin-left: 4px;">Regalo</span>
+                </button>
+                <button class="nav__btn nav__btn--basket" id="basket-toggle" aria-label="Ver Canasta">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span class="basket-count">0</span>
+                </button>
+                <a href="https://wa.me/593979487687" class="nav__btn nav__btn--wa" aria-label="WhatsApp">
+                    <span class="material-symbols-outlined">chat</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- ══════ BASKET PANEL ══════ -->
+    <div class="basket-panel" id="basket-panel">
+        <div class="basket-panel__header">
+            <h3>Tu Canasta</h3>
+            <button class="basket-panel__close" id="basket-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="basket-panel__content" id="basket-items">
+            <!-- Items added dynamically -->
+            <div class="basket-empty">Tu canasta está vacía.</div>
+        </div>
+        <div class="basket-panel__footer">
+            <div class="basket-total">
+                <span>Total:</span>
+                <span id="basket-total-amount">$0.00</span>
+            </div>
+            <button class="btn btn--gold btn--full" id="basket-checkout">
+                Hacer pedido por WhatsApp
+            </button>
+            <button class="btn btn--outline btn--full basket-panel__continue" id="basket-continue">
+                Seguir comprando
+            </button>
+        </div>
+    </div>
+    <div class="basket-overlay" id="basket-overlay"></div>
+
+    <!-- ══════ TOP URGENCY BANNER (Temu Style) ══════ -->
+    <div class="top-timer-banner">
+        <div class="top-timer-banner__content">
+            <span class="material-symbols-outlined">alarm</span>
+            <span class="banner-text">Las ofertas expiran en:</span>
+            <div class="countdown-mini">
+                <span id="top-h">02</span>:<span id="top-m">45</span>:<span id="top-s">12</span>
+            </div>
+            <a href="#catalogo" class="top-timer-banner__link">COMPRAR YA</a>
+        </div>
+    </div>
+
+    <!-- ══════ VIDEO HERO ══════ -->
+    <header class="video-hero" id="inicio">
+        <video class="video-hero__bg" autoplay muted loop playsinline>
+            <source src="hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-hero__overlay"></div>
+        <div class="video-hero__content">
+            <img src="logo.png" alt="Cofre Arte Vivo" class="video-hero__logo" />
+            <h1 class="video-hero__title">Cofre Arte Vivo</h1>
+            <p class="video-hero__subtitle">Botánica Exclusiva — Hecho en Ecuador 🇪🇨</p>
+            <a href="#catalogo" class="video-hero__btn">VER CATÁLOGO 🌿</a>
+        </div>
+    </header>
+
+    <!-- ══════ CATEGORIES (QUICK FILTERS) ══════ -->
+    <div class="category-tabs">
+        <div class="category-tabs__inner">
+            <button class="category-tab active" data-filter="all">Todo</button>
+            <button class="category-tab" data-filter="kokedama">Kokedamas</button>
+            <button class="category-tab" data-filter="maceta">Macetas</button>
+            <button class="category-tab" data-filter="bonsai">Bonsáis</button>
+            <button class="category-tab" data-filter="orquidea">Orquídeas</button>
+        </div>
+    </div>
+
+    <!-- ══════ CATÁLOGO (TEMU STYLE) ══════ -->
+    <section class="catalog" id="catalogo">
+        <div class="container">
+            <!-- ══════ EXCLUSIVE LIMITED OFFER ══════ -->
+            <!-- FLASH SALE (Temu Style Horizontal) -->
+            <div class="flash-sale">
+                <div class="flash-sale__header">
+                    <div class="flash-sale__title">
+                        <span class="material-symbols-outlined">bolt</span>
+                        OFERTA FLASH
+                    </div>
+                    <div class="flash-sale__timer">
+                        Termina en <span id="flash-h">02</span>:<span id="flash-m">45</span>:<span
+                            id="flash-s">12</span>
+                    </div>
+                </div>
+                <div class="flash-sale__grid">
+                    <div class="flash-sale__item add-to-basket" data-id="f1" data-name="Flash Kokedama Mini"
+                        data-price="9.99">
+                        <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&w=150&q=80"
+                            alt="Flash 1" class="flash-sale__img">
+                        <div class="flash-sale__price">$9.99 <span class="flash-sale__discount">-60%</span></div>
+                        <div class="flash-sale__stock">
+                            <div class="flash-sale__stock-bar" style="width: 85%;"></div>
+                        </div>
+                        <div class="flash-sale__stock-text">85% Vendido</div>
+                        <div class="flash-sale__action">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                    </div>
+                    <div class="flash-sale__item add-to-basket" data-id="f2" data-name="Flash Maceta Ceramica"
+                        data-price="5.50">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=150&q=80"
+                            alt="Flash 2" class="flash-sale__img">
+                        <div class="flash-sale__price">$5.50 <span class="flash-sale__discount">-70%</span></div>
+                        <div class="flash-sale__stock">
+                            <div class="flash-sale__stock-bar" style="width: 92%;"></div>
+                        </div>
+                        <div class="flash-sale__stock-text">92% Vendido</div>
+                        <div class="flash-sale__action">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                    </div>
+                    <div class="flash-sale__item add-to-basket" data-id="f3" data-name="Orquídea Flash"
+                        data-price="25.00">
+                        <img src="https://images.unsplash.com/photo-1596400508493-9c8dfcc638e8?auto=format&fit=crop&w=150&q=80"
+                            alt="Orquídea Flash" class="flash-sale__img">
+                        <div class="flash-sale__price">$12.99 <span class="flash-sale__discount">-50%</span></div>
+                        <div class="flash-sale__stock">
+                            <div class="flash-sale__stock-bar" style="width: 45%;"></div>
+                        </div>
+                        <div class="flash-sale__stock-text">45% Vendido</div>
+                        <div class="flash-sale__action">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                    </div>
+                    <div class="flash-sale__item add-to-basket" data-id="f4" data-name="Bonsai Express"
+                        data-price="45.00">
+                        <img src="https://images.unsplash.com/photo-1512423175373-b3484918e77a?auto=format&fit=crop&w=150&q=80"
+                            alt="Bonsai Express" class="flash-sale__img">
+                        <div class="flash-sale__price">$15.00 <span class="flash-sale__discount">-40%</span></div>
+                        <div class="flash-sale__stock">
+                            <div class="flash-sale__stock-bar" style="width: 78%;"></div>
+                        </div>
+                        <div class="flash-sale__stock-text">78% Vendido</div>
+                        <div class="flash-sale__action">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                    </div>
+                    <div class="flash-sale__item add-to-basket" data-id="f5" data-name="Flash Mini Bonsai"
+                        data-price="8.99">
+                        <img src="https://images.unsplash.com/photo-1596547610052-16e6d11f5d7d?auto=format&fit=crop&w=150&q=80"
+                            alt="Flash 5" class="flash-sale__img">
+                        <div class="flash-sale__price">$8.99 <span class="flash-sale__discount">-55%</span></div>
+                        <div class="flash-sale__stock">
+                            <div class="flash-sale__stock-bar" style="width: 95%;"></div>
+                        </div>
+                        <div class="flash-sale__stock-text">¡Casi agotado!</div>
+                        <div class="flash-sale__action">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="catalog__grid" id="catalog-grid">
+                <div id="no-results"
+                    style="display: none; grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                    <span class="material-symbols-outlined" style="font-size: 4rem; color: #ccc;">search_off</span>
+                    <p style="font-size: 1.2rem; color: #666; margin-top: 1rem;">No encontramos productos que coincidan
+                        con tu búsqueda.</p>
+                    <button
+                        onclick="document.getElementById('search-input').value=''; document.getElementById('search-input').dispatchEvent(new Event('input'));"
+                        class="btn" style="margin-top: 1rem; background: var(--gold); color: white;">Ver todos los
+                        productos</button>
+                </div>
+                <!-- Product 1 -->
+                <div class="product-card" data-id="1" data-name="Kokedama Zen" data-price="25.00"
+                    data-category="kokedama"
+                    data-description="Una pieza maestra de equilibrio y serenidad. Esta kokedama utiliza musgo vivo de alta calidad para retener la humedad."
+                    data-care-light="Luz indirecta brillante" data-care-water="Sumergir 10 min cada semana"
+                    data-gift="Ideal para: Meditación y Yoga">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&w=400&q=80"
+                            alt="Kokedama Zen" loading="lazy" />
+                        <span class="product-card__badge product-card__badge--bestseller">Más Vendido</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Kokedama Zen</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$25.00</span>
+                            <span class="product-card__old-price">$35.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">2k+ vendidos</span>
+                        </div>
+                        <div class="trust-badge-mini">
+                            <span class="material-symbols-outlined" style="font-size: 0.8rem;">local_shipping</span>
+                            Envío Gratis
+                        </div>
+                        <p
+                            style="color: var(--urgency-red); font-size: 0.7rem; font-weight: 800; margin-top: 5px; animation: flash-text 1.5s infinite;">
+                            ¡Solo quedan 3 unidades!</p>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-id="2" data-name="Maceta Artesanal" data-price="15.00"
+                    data-category="maceta"
+                    data-description="Moldeada individualmente por manos artesanas ecuatorianas. Ideal para suculentas."
+                    data-care-light="Luz directa o indirecta" data-care-water="Riego moderado"
+                    data-gift="Ideal para: Escritorio Mínimal">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=400&q=80"
+                            alt="Maceta Minimal" loading="lazy" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Maceta Artesanal</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$15.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★☆</span>
+                            <span class="sold">500+ vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-id="3" data-name="Colgante Luxury" data-price="48.00"
+                    data-category="kokedama"
+                    data-description="Eleva el diseño de tu sala con esta pieza aérea con soporte de macramé natural."
+                    data-care-light="Sombra parcial" data-care-water="Pulverizar cada 2 días"
+                    data-gift="Ideal para: Aniversarios">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80"
+                            alt="Colgante Luxury" loading="lazy" />
+                        <span class="product-card__badge product-card__badge--limited">Casi Agotado</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Colgante Luxury</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$48.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">120 vendidos</span>
+                        </div>
+                        <p
+                            style="color: var(--urgency-red); font-size: 0.7rem; font-weight: 800; margin-top: 5px; animation: flash-text 1.5s infinite;">
+                            ¡Última disponible!</p>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-id="4" data-name="Kit Principiante" data-price="28.00"
+                    data-category="kokedama"
+                    data-description="Kit completo: kokedama pequeña + guía de cuidados + atomizador especializado.">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1593025219213-39acdb2792c3?auto=format&fit=crop&w=400&q=80"
+                            alt="Kit Principiante" loading="lazy" />
+                        <span class="product-card__badge product-card__badge--promo">-15% hoy</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Kit Principiante</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$28.00</span>
+                            <span class="product-card__old-price">$33.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">1k+ vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-id="5" data-name="Bonsái Cuenco Ovalado" data-price="55.00"
+                    data-category="bonsai" data-description="Mini árbol milenario en maceta ovalada.">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1599598425947-33002621ecb0?auto=format&fit=crop&w=400&q=80"
+                            alt="Bonsái Japonés" loading="lazy" />
+                        <span class="product-card__badge product-card__badge--excl">Exclusivo</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Bonsái Cuenco Ovalado</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$55.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">45 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-id="6" data-name="Suculenta Hexágono Andino" data-price="18.00"
+                    data-category="maceta" data-description="Planta desértica en prisma de concreto blanco andino.">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1444491741275-3747c53c99b4?auto=format&fit=crop&w=400&q=80"
+                            alt="Suculenta Geométrica" loading="lazy" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Suculenta Hexágono Andino</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$18.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★☆</span>
+                            <span class="sold">300+ vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" data-id="7" data-name="Monstera Rostro Escultural" data-price="35.00"
+                    data-category="maceta"
+                    data-description="Monstera en maceta con diseño de rostro abstracto tallada a mano.">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&w=400&q=80"
+                            alt="Monstera en Rostro" loading="lazy" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Monstera Rostro Escultural</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$35.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">89 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" data-id="8" data-name="Orquídea Vaso Cónico" data-price="42.00"
+                    data-category="orquidea"
+                    data-description="Orquídea phalaenopsis en contenedor de cristal cónico y base de roble.">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1566491173708-348db493c66d?auto=format&fit=crop&w=400&q=80"
+                            alt="Orquídea Cristal" loading="lazy" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Orquídea Vaso Cónico</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$42.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">67 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket" aria-label="Añadir al carrito">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 9: Kokedamas -->
+                <div class="product-card" data-id="9" data-name="Kokedama Jade Mini" data-price="19.99"
+                    data-category="kokedama">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&w=400&q=80"
+                            alt="Jade Mini" />
+                        <span class="product-card__badge product-card__badge--bestseller">Top 1</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Kokedama Árbol de la Abundancia Jade Mini</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$19.99</span>
+                            <span class="product-card__old-price">$29.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">4k+ vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 10: Macetas -->
+                <div class="product-card" data-id="10" data-name="Maceta Mármol Premium" data-price="32.00"
+                    data-category="maceta">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=400&q=80"
+                            alt="Maceta Mármol" />
+                        <span class="product-card__badge product-card__badge--excl">Nuevo</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Maceta de Mármol Pulido con Drenaje Inteligente</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$32.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">128 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 11: Bonsáis -->
+                <div class="product-card" data-id="11" data-name="Bonsái Ficus 8 Años" data-price="85.00"
+                    data-category="bonsai">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1512423175373-b3484918e77a?auto=format&fit=crop&w=400&q=80"
+                            alt="Bonsai Ficus" />
+                        <span class="product-card__badge product-card__badge--limited">Stock Bajo</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Bonsái Ficus Ginseng de Colección 8 Años</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$85.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">15 vendidos</span>
+                        </div>
+                        <p
+                            style="color: var(--urgency-red); font-size: 0.7rem; font-weight: 800; margin-top: 5px; animation: flash-text 1.5s infinite;">
+                            ¡Solo queda 1!</p>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 12: Orquídeas -->
+                <div class="product-card" data-id="12" data-name="Orquídea Tigre Exótica" data-price="45.50"
+                    data-category="orquidea">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596400508493-9c8dfcc638e8?auto=format&fit=crop&w=400&q=80"
+                            alt="Orquidea Tigre" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Orquídea Phalaenopsis Tigre Floración de 3 Meses</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$45.50</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">89 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 13: Kokedamas -->
+                <div class="product-card" data-id="13" data-name="Palo de Brasil Kokedama" data-price="29.99"
+                    data-category="kokedama">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596547610052-16e6d11f5d7d?auto=format&fit=crop&w=400&q=80"
+                            alt="Palo Brasil" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Palo de Brasil en Kokedama Purificador de Aire</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$29.99</span>
+                            <span class="product-card__old-price">$38.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">540 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 14: Macetas -->
+                <div class="product-card" data-id="14" data-name="Set 3 Mini Macetas" data-price="12.00"
+                    data-category="maceta">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=400&q=80"
+                            alt="Set Macetas" />
+                        <span class="product-card__badge product-card__badge--promo">Ahorro Set</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Set de 3 Mini Macetas Minimalistas de Cerámica</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$12.00</span>
+                            <span class="product-card__old-price">$18.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★☆</span>
+                            <span class="sold">2k+ vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 15: Bonsáis -->
+                <div class="product-card" data-id="15" data-name="Bonsái Arce Rojo" data-price="110.00"
+                    data-category="bonsai">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1512423175373-b3484918e77a?auto=format&fit=crop&w=400&q=80"
+                            alt="Arce Rojo" />
+                        <span class="product-card__badge product-card__badge--excl">Colección</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Bonsái Arce Rojo Japonés Estilo Escultural</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$110.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">4 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 16: Orquídeas -->
+                <div class="product-card" data-id="16" data-name="Orquídea Blanca Imperial" data-price="38.00"
+                    data-category="orquidea">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596400508493-9c8dfcc638e8?auto=format&fit=crop&w=400&q=80"
+                            alt="Orquidea Blanca" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Orquídea Blanca Imperial en Cuenco de Barro</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$38.00</span>
+                            <span class="product-card__old-price">$45.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">210 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 17: Kokedamas -->
+                <div class="product-card" data-id="17" data-name="Anturio Rojo Kokedama" data-price="35.00"
+                    data-category="kokedama">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596547610052-16e6d11f5d7d?auto=format&fit=crop&w=400&q=80"
+                            alt="Anturio" />
+                        <span class="product-card__badge product-card__badge--bestseller">Must Have</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Anturio Rojo en Kokedama de Musgo Premium</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$35.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">450 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 18: Macetas -->
+                <div class="product-card" data-id="18" data-name="Copa de Musgo" data-price="22.50"
+                    data-category="maceta">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=400&q=80"
+                            alt="Copa Musgo" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Copa de Arcilla Natural con Envoltorio de Musgo</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$22.50</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">32 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 19: Bonsáis -->
+                <div class="product-card" data-id="19" data-name="Bonsái Olivo Real" data-price="78.00"
+                    data-category="bonsai">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1512423175373-b3484918e77a?auto=format&fit=crop&w=400&q=80"
+                            alt="Olivo" />
+                        <span class="product-card__badge product-card__badge--limited">Oferta</span>
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Bonsái de Olivo Real Cuidados Sencillos</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$78.00</span>
+                            <span class="product-card__old-price">$95.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">12 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 20: Orquídeas -->
+                <div class="product-card" data-id="20" data-name="Vanda Púrpura Suspensión" data-price="59.00"
+                    data-category="orquidea">
+                    <div class="product-card__img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596400508493-9c8dfcc638e8?auto=format&fit=crop&w=400&q=80"
+                            alt="Vanda" />
+                    </div>
+                    <div class="product-card__info">
+                        <h3>Orquídea Vanda Púrpura Estilo Colgante Raíz Desnuda</h3>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$59.00</span>
+                        </div>
+                        <div class="product-card__stats">
+                            <span class="stars">★★★★★</span>
+                            <span class="sold">8 vendidos</span>
+                        </div>
+                        <button class="btn btn--temu add-to-basket">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════ TRUST BAR (TEMU Style) ══════ -->
+    <div class="trust-bar">
+        <div class="trust-bar__item">
+            <span class="material-symbols-outlined">verified_user</span>
+            <span>Pago Seguro</span>
+        </div>
+        <div class="trust-bar__item">
+            <span class="material-symbols-outlined">local_shipping</span>
+            <span>Envío a todo Ecuador</span>
+        </div>
+        <div class="trust-bar__item">
+            <span class="material-symbols-outlined">support_agent</span>
+            <span>Soporte 24/7</span>
+        </div>
+    </div>
+
+    <!-- ══════ FOOTER ══════ -->
+    <footer class="footer" id="contacto">
+        <div class="footer__inner">
+            <div class="footer__logo">
+                <img src="logo.png" alt="Cofre Arte Vivo Logo" class="footer__logo-img" />
+            </div>
+            <div class="footer__social">
+                <a class="footer__social-btn footer__social-btn--tiktok" href="https://www.tiktok.com/@cofreartevivo"
+                    target="_blank" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.6a8.2 8.2 0 0 0 3.76.92V6.69Z" />
+                    </svg></a>
+                <a class="footer__social-btn footer__social-btn--instagram"
+                    href="https://www.instagram.com/cofreartevivo" target="_blank" aria-label="Instagram"><svg
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0Zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881Z" />
+                    </svg></a>
+                <a class="footer__social-btn footer__social-btn--wa" href="https://wa.me/593979487687" target="_blank"
+                    aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                    </svg></a>
+            </div>
+            <div class="footer__copyright">
+                <p>© 2024 Cofre Arte Vivo Ecuador</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Social Menu (Deploying from WhatsApp) -->
+    <div class="social-menu">
+        <div class="social-menu__items">
+            <a class="social-menu__item social-menu__item--tiktok" href="https://www.tiktok.com/@cofreartevivo"
+                target="_blank" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.6a8.2 8.2 0 0 0 3.76.92V6.69Z" />
+                </svg>
+            </a>
+            <a class="social-menu__item social-menu__item--instagram" href="https://www.instagram.com/cofreartevivo"
+                target="_blank" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0Zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881Z" />
+                </svg>
+            </a>
+        </div>
+        <a class="social-menu__btn" href="https://wa.me/593979487687?text=Hola!%20Quiero%20información%20🌿"
+            target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+            </svg>
+        </a>
+    </div>
+
+
+    <!-- ══════ PRODUCT MODAL ══════ -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal product-modal">
+            <button class="modal__close" id="product-modal-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="product-modal__content">
+                <div class="product-modal__image">
+                    <img id="modal-img" src="" alt="" />
+                </div>
+                <div class="product-modal__details">
+                    <span class="section-tag" id="modal-tag">Detalles</span>
+                    <h2 class="modal__title" id="modal-title">Nombre del Producto</h2>
+                    <p class="product-modal__desc" id="modal-desc">Descripción detallada.</p>
+
+                    <div class="product-modal__care">
+                        <div class="care-item">
+                            <span class="material-symbols-outlined">light_mode</span>
+                            <div>
+                                <strong>Luz</strong>
+                                <span id="modal-light">Requerimiento</span>
+                            </div>
+                        </div>
+                        <div class="care-item">
+                            <span class="material-symbols-outlined">water_drop</span>
+                            <div>
+                                <strong>Riego</strong>
+                                <span id="modal-water">Frecuencia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-modal__gift">
+                        <span class="material-symbols-outlined">card_giftcard</span>
+                        <span id="modal-gift">Sugerencia de regalo</span>
+                    </div>
+
+                    <div class="product-modal__footer">
+                        <span class="product-modal__price" id="modal-price">$0.00</span>
+                        <button class="btn btn--gold" id="modal-add-btn">Añadir a la Canasta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═════════ REGISTRATION MODAL (GIFT) ═════════ -->
+    <div class="reg-modal" id="reg-modal">
+        <div class="reg-modal__card">
+            <div class="reg-modal__header">
+                <div class="reg-modal__close" id="reg-close">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+                <div class="reg-modal__gift-icon">🎁</div>
+                <h2>¡Regalo de Bienvenida!</h2>
+                <p>Únete y recibe un <strong>20% de descuento</strong> + un regalo en tu cumpleaños.</p>
+            </div>
+            <div class="reg-modal__body">
+                <form class="reg-form" id="reg-form">
+                    <div class="reg-form__group">
+                        <label for="reg-name">Nombre Completo</label>
+                        <input type="text" id="reg-name" placeholder="Ej. Juan Pérez" required>
+                    </div>
+                    <div class="reg-form__group">
+                        <label for="reg-email">Correo Electrónico</label>
+                        <input type="email" id="reg-email" placeholder="email@ejemplo.com" required>
+                    </div>
+                    <div class="reg-form__group">
+                        <label for="reg-phone">Número de Teléfono</label>
+                        <input type="tel" id="reg-phone" placeholder="Ej. 0991234567" required>
+                    </div>
+                    <div class="reg-form__group">
+                        <label for="reg-birthday">Fecha de Cumpleaños</label>
+                        <input type="date" id="reg-birthday" required>
+                    </div>
+                    <button type="submit" class="reg-modal__btn">OBTENER MI REGALO 🚀</button>
+                </form>
+
+                <!-- Success State -->
+                <div class="reg-modal__success" id="reg-success">
+                    <p>🎉 ¡Felicidades! Aquí tienes tu cupón exclusivo:</p>
+                    <div class="coupon-box">
+                        <span class="coupon-code" id="coupon-display">COFRE20</span>
+                        <small>Usa este código en tu próximo pedido por WhatsApp</small>
+                    </div>
+                    <button class="reg-modal__btn" id="reg-copy-btn">COPIAR CÓDIGO 📋</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ TOAST NOTIFICATION ══════ -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
+        <span class="material-symbols-outlined">north</span>
+    </button>
+
+    <!-- ═════════ BOTTOM NAV (Mobile APP style) ═════════ -->
+    <nav class="bottom-nav">
+        <a href="#inicio" class="bottom-nav__item active">
+            <span class="material-symbols-outlined">home</span>
+            <span>Inicio</span>
+        </a>
+        <a href="#catalogo" class="bottom-nav__item">
+            <span class="material-symbols-outlined">grid_view</span>
+            <span>Categorías</span>
+        </a>
+        <a href="#" class="bottom-nav__item" id="mobile-coupon-btn">
+            <span class="material-symbols-outlined" style="color: #cc0000;">featured_seasonal_and_gifts</span>
+            <span style="color: #cc0000; font-weight: 700;">Regalo</span>
+        </a>
+        <div class="bottom-nav__item" id="basket-toggle-bottom" style="cursor:pointer;">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span>Canasta</span>
+        </div>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
